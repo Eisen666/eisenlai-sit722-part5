@@ -1,1 +1,16 @@
-# Your Solution
+version: '3.8'
+
+services:
+  book_catalog:
+    build: ./book_catalog
+    platform: linux/amd64
+    container_name: book_catalog
+    environment:
+      DATABASE_URL: "postgresql://sit7228_2c_user:qlHT8ay9gEJWyvxut60xlL7lUGn9wlMm@dpg-crt46dlds78s73eb59tg-a.oregon-postgres.render.com/sit7228_2c"
+
+  inventory_management:
+    build: ./inventory_management
+    platform: linux/amd64
+    container_name: inventory_management
+    environment:
+      DATABASE_URL: "postgresql://sit7228_2c_user:qlHT8ay9gEJWyvxut60xlL7lUGn9wlMm@dpg-crt46dlds78s73eb59tg-a.oregon-postgres.render.com/sit7228_2c"

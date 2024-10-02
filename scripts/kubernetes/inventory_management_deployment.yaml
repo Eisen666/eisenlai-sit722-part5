@@ -1,0 +1,39 @@
+# Deployment for inventory_management microservice
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inventory-management
+spec:
+  replicas: 2   # Set the number of pod replicas to run
+  selector:
+    matchLabels:
+      app: inventory-management
+  template:
+    metadata:
+      labels:
+        app: inventory-management
+    spec:
+      containers:
+      - name: inventory-management
+        image: eisenlai.azurecr.io/inventory_management:latest 
+        imagePullPolicy: Always
+        env:
+        - name: DATABASE_URL
+          value: "postgresql://sit7228_2c_user:qlHT8ay9gEJWyvxut60xlL7lUGn9wlMm@dpg-crt46dlds78s73eb59tg-a.oregon-postgres.render.com/sit7228_2c"
+        ports:
+        - containerPort: 8001
+
+---
+# Service for inventory_management microservice
+apiVersion: v1
+kind: Service
+metadata:
+  name: inventory-management-service
+spec:
+  selector:
+    app: inventory-management
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 8001  # Port exposed to the cluster
+      targetPort: 8001  # Container port
